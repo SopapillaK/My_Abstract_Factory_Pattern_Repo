@@ -16,6 +16,13 @@ public class CycleFactory : IVehicleFactory
             case 1:
                 if (requirements.NumberOfWheels == 1) return new Unicycle();
                 return new Bicycle();
+            case 2:
+                return new Tandem();
+            case 3:
+                return new Tricycle();
+            case 4:
+                if (requirements.Cargo) return new GoKart();
+                return new FamilyBike();
             default:
                 return new Bicycle();
         }
@@ -30,17 +37,17 @@ public class MotorVehicleFactory : IVehicleFactory
         {
             case 1:
                 return new Motorbike();
+            case 2:
+                if (requirements.Cargo && requirements.NumberOfWheels == 4) return new Truck();
+                return new Car();
             default:
-                return new Truck();
+                return new Car();
         }
     }
 }
 
 public abstract class AbstractVehicleFactory
 {
-    //public abstract IVehicleFactory CycleFactory();
-    //public abstract IVehicleFactory MotorVehicleFactory();
-
     public abstract IVehicle Create();
 }
 
@@ -48,16 +55,6 @@ public abstract class AbstractVehicleFactory
 
 public class VehicleFactory : AbstractVehicleFactory
 {
-    //public override IVehicleFactory CycleFactory()
-    //{
-    //    return new CycleFactory();
-    //}
-
-    //public override IVehicleFactory MotorVehicleFactory()
-    //{
-    //    return new MotorVehicleFactory();
-    //}
-
     private readonly IVehicleFactory _factory;
     private readonly VehicleRequirements _requirements;
 

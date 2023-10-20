@@ -14,21 +14,19 @@ public class Client : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         // validate our data
         NumberOfWheels = Mathf.Max(NumberOfWheels, 1);
         Passengers = Mathf.Max(Passengers, 1);
-       // Engine = Cargo;
+    }
 
+    // Update is called once per frame
+    public void SummonButton()
+    {
         VehicleRequirements requirements = new VehicleRequirements();
         requirements.NumberOfWheels = NumberOfWheels;
         requirements.Engine = Engine;
         requirements.Passengers = Passengers;
+        requirements.Cargo = Cargo;
 
         //IVehicle v = new Unicycle();
         IVehicle v = GetVehicle(requirements);
