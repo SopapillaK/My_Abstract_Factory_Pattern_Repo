@@ -7,24 +7,26 @@ public interface IVehicleFactory
     IVehicle Create(VehicleRequirements requirements);
 }
 
-public class CycleFactory : IVehicleFactory
+public class ShapeFactory : IVehicleFactory
 {
     public IVehicle Create(VehicleRequirements requirements)
     {
-        switch (requirements.Passengers)
+        switch (requirements.NumberOfPoints)
         {
             case 1:
-                if (requirements.NumberOfWheels == 1) return new Unicycle();
-                return new Bicycle();
+                return new Circle();
             case 2:
-                return new Tandem();
+                //if (requirements.NumberOfPoints == 3) return new Triangle();
+                return new Circle();
             case 3:
-                return new Tricycle();
+                return new Triangle();
+            //case 4:
+            //    if (requirements.Cargo) return new GoKart();
+            //    return new FamilyBike();
             case 4:
-                if (requirements.Cargo) return new GoKart();
-                return new FamilyBike();
+                return new Square();
             default:
-                return new Bicycle();
+                return new Circle();
         }
     }
 }
@@ -33,15 +35,15 @@ public class MotorVehicleFactory : IVehicleFactory
 {
     public IVehicle Create(VehicleRequirements requirements)
     {
-        switch (requirements.Passengers)
+        switch (requirements.NumberOfPoints)
         {
             case 1:
+                if (requirements.NumberOfPoints == 3)
+                    return new Motorbike();
                 return new Motorbike();
-            case 2:
-                if (requirements.Cargo && requirements.NumberOfWheels == 4) return new Truck();
-                return new Car();
+
             default:
-                return new Car();
+                return new ColoredCircle();
         }
     }
 }
@@ -60,7 +62,7 @@ public class VehicleFactory : AbstractVehicleFactory
 
     public VehicleFactory(VehicleRequirements requirements)
     {
-        _factory = requirements.Engine ? (IVehicleFactory)new MotorVehicleFactory() : new CycleFactory();
+        _factory = requirements.Engine ? (IVehicleFactory)new MotorVehicleFactory() : new ShapeFactory();
         _requirements = requirements;
     }
 

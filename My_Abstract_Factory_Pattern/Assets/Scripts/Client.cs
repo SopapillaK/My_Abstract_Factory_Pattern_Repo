@@ -6,16 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class Client : MonoBehaviour
 {
-    public int NumberOfWheels = 0;
+    public int NumberOfPoints;
     public bool Engine;
     public int Passengers = 0;
-    public bool Cargo;
+    //public bool Cargo;
 
     // Start is called before the first frame update
     void Start()
     {
         // validate our data
-        NumberOfWheels = Mathf.Max(NumberOfWheels, 1);
+        NumberOfPoints = Mathf.Max(NumberOfPoints);
         Passengers = Mathf.Max(Passengers, 1);
     }
 
@@ -23,10 +23,10 @@ public class Client : MonoBehaviour
     public void SummonButton()
     {
         VehicleRequirements requirements = new VehicleRequirements();
-        requirements.NumberOfWheels = NumberOfWheels;
+        requirements.NumberOfPoints = NumberOfPoints;
         requirements.Engine = Engine;
-        requirements.Passengers = Passengers;
-        requirements.Cargo = Cargo;
+        //requirements.Passengers = Passengers;
+        //requirements.Cargo = Cargo;
 
         //IVehicle v = new Unicycle();
         IVehicle v = GetVehicle(requirements);
@@ -59,21 +59,32 @@ public class Client : MonoBehaviour
         else { Engine = true; }
     }
 
-    public void OnCLickCargoButton()
+    //public void OnCLickCargoButton()
+    //{
+    //    if (Cargo) { Cargo = false; }
+    //    else { Cargo = true; }
+    //}
+
+    public void ChooseNumPoints(int numPoints)
     {
-        if (Cargo) { Cargo = false; }
-        else { Cargo = true; }
+        if (numPoints == 0)
+        {
+            NumberOfPoints = 0;
+        }
+        if (numPoints == 1) 
+        {
+            NumberOfPoints = 3;
+        }
+        if (numPoints == 2)
+        {
+            NumberOfPoints = 4;
+        }
     }
 
-    public void OnClickAddWheel()
-    {
-        NumberOfWheels++;
-    }
-
-    public void OnClickAddPassenger()
-    {
-        Passengers++;
-    }
+    //public void OnClickAddPassenger()
+    //{
+    //    Passengers++;
+    //}
 
     public void OnClickReloadScene()
     {

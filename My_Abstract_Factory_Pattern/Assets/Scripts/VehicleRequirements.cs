@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class VehicleRequirements
 {
-    public int NumberOfWheels;
+    public int NumberOfPoints;
     public bool Engine;
-    public int Passengers;
-    public bool Cargo;
+    public int Colors;
+    //public bool Cargo;
 }
