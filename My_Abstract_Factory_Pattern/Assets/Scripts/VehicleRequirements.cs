@@ -7,5 +7,4 @@ public class VehicleRequirements
     public int NumberOfPoints;
     public bool BigSize;
     public bool Colors;
-    //public bool Cargo;
 }

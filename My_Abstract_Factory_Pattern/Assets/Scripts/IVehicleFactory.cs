@@ -14,10 +14,16 @@ public class ShapeFactory : IVehicleFactory
         switch (requirements.NumberOfPoints)
         {
             case 3:
+                if (requirements.BigSize)
+                    return new BigTriangle();
                 return new Triangle();
             case 4:
+                if (requirements.BigSize)
+                    return new BigSquare();
                 return new Square();
             default:
+                if (requirements.BigSize)
+                    return new BigCircle();
                 return new Circle();
         }
     }
@@ -32,41 +38,32 @@ public class ColoredFactory : IVehicleFactory
         {
             case 3:
                 if (requirements.NumberOfPoints == 3)
+                {
+                    if (requirements.BigSize)
+                        return new BigBlueTriangle();
                     return new BlueTriangle();
+                }
                 return new Triangle();
             case 4:
                 if (requirements.NumberOfPoints == 4)
+                {
+                    if (requirements.BigSize)
+                        return new BigBlueSquare();
                     return new BlueSquare();
+                }
                 return new Square();
             default:
-                if(requirements.NumberOfPoints == 0) 
+                if(requirements.NumberOfPoints == 0)
+                {
+                    if (requirements.BigSize)
+                        return new BigBlueCircle();
                     return new BlueCircle();
+                }
                 return new Circle();
         }
     }
 }
 
-public class SizeFactory : IVehicleFactory
-{
-    public IVehicle Create(VehicleRequirements requirements)
-    {
-        switch (requirements.NumberOfPoints)
-        {
-            case 3:
-                if (requirements.NumberOfPoints == 3 && requirements.Colors)
-                    return new BigBlueTriangle();
-                return new BigTriangle();
-            case 4:
-                if (requirements.NumberOfPoints == 4 && requirements.Colors)
-                    return new BigBlueSquare();
-                return new BigSquare();
-            default:
-                if (requirements.NumberOfPoints == 0 && requirements.Colors)
-                    return new BigBlueCircle();
-                return new BigCircle();
-        }
-    }
-}
 
 public abstract class AbstractVehicleFactory
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Client : MonoBehaviour
 {
@@ -10,16 +11,23 @@ public class Client : MonoBehaviour
     public bool Colors;
     public bool BigSize;
 
+    public TextMeshProUGUI colorOnOff;
+    public TextMeshProUGUI bigsizeOnOff;
+    public Image shapeImage;
+
     // Start is called before the first frame update
     void Start()
     {
         // validate our data
         NumberOfPoints = Mathf.Max(NumberOfPoints);
+        colorOnOff.text = "Off";
+        bigsizeOnOff.text = "Off";
     }
 
     // Update is called once per frame
     public void SummonButton()
     {
+
         VehicleRequirements requirements = new VehicleRequirements();
         requirements.NumberOfPoints = NumberOfPoints;
         requirements.Colors = Colors;
@@ -28,38 +36,27 @@ public class Client : MonoBehaviour
         //IVehicle v = new Unicycle();
         IVehicle v = GetVehicle(requirements);
         Debug.Log(v);
+        shapeImage.sprite = v.AddImage();
+        shapeImage.transform.localScale = new Vector3(v.Size(), v.Size(), v.Size());
+
     }
 
     private static IVehicle GetVehicle(VehicleRequirements requirements)
     {
-        // based on requirements.Engine
-        // choose a motorvehicle factory or a cycle factory
-        // call create on the factory to get an appropriate vehicle
-        // and return it
-
-        //VehicleFactory factory = new VehicleFactory();
-
-        //if (requirements.Engine)
-        //{
-        //    return factory.MotorVehicleFactory().Create(requirements);
-        //}
-
-        //return factory.CycleFactory().Create(requirements);
-
         VehicleFactory factory = new VehicleFactory(requirements);
         return factory.Create();
     }
 
     public void OnCLickColorButton()
     {
-        if (Colors) { Colors = false; }
-        else { Colors = true; }
+        if (Colors) { Colors = false; colorOnOff.text = "Off"; }
+        else { Colors = true; colorOnOff.text = "On"; }
     }
 
     public void OnCLickSizeButton()
     {
-       if (BigSize) { BigSize = false; }
-        else { BigSize = true; }
+       if (BigSize) { BigSize = false; bigsizeOnOff.text = "Off"; }
+        else { BigSize = true; bigsizeOnOff.text = "On"; }
     }
 
     public void ChooseNumPoints(int numPoints)
