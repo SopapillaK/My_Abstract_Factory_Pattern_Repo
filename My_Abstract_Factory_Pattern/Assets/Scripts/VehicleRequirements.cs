@@ -5,7 +5,7 @@ using UnityEngine;
 public class VehicleRequirements
 {
     public int NumberOfPoints;
-    public bool Engine;
-    public int Colors;
+    public bool BigSize;
+    public bool Colors;
     //public bool Cargo;
 }

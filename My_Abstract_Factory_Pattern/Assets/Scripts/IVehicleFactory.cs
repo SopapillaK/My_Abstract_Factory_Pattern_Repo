@@ -13,16 +13,8 @@ public class ShapeFactory : IVehicleFactory
     {
         switch (requirements.NumberOfPoints)
         {
-            case 1:
-                return new Circle();
-            case 2:
-                //if (requirements.NumberOfPoints == 3) return new Triangle();
-                return new Circle();
             case 3:
                 return new Triangle();
-            //case 4:
-            //    if (requirements.Cargo) return new GoKart();
-            //    return new FamilyBike();
             case 4:
                 return new Square();
             default:
@@ -31,19 +23,47 @@ public class ShapeFactory : IVehicleFactory
     }
 }
 
-public class MotorVehicleFactory : IVehicleFactory
+
+public class ColoredFactory : IVehicleFactory
 {
     public IVehicle Create(VehicleRequirements requirements)
     {
         switch (requirements.NumberOfPoints)
         {
-            case 1:
+            case 3:
                 if (requirements.NumberOfPoints == 3)
-                    return new Motorbike();
-                return new Motorbike();
-
+                    return new BlueTriangle();
+                return new Triangle();
+            case 4:
+                if (requirements.NumberOfPoints == 4)
+                    return new BlueSquare();
+                return new Square();
             default:
-                return new ColoredCircle();
+                if(requirements.NumberOfPoints == 0) 
+                    return new BlueCircle();
+                return new Circle();
+        }
+    }
+}
+
+public class SizeFactory : IVehicleFactory
+{
+    public IVehicle Create(VehicleRequirements requirements)
+    {
+        switch (requirements.NumberOfPoints)
+        {
+            case 3:
+                if (requirements.NumberOfPoints == 3 && requirements.Colors)
+                    return new BigBlueTriangle();
+                return new BigTriangle();
+            case 4:
+                if (requirements.NumberOfPoints == 4 && requirements.Colors)
+                    return new BigBlueSquare();
+                return new BigSquare();
+            default:
+                if (requirements.NumberOfPoints == 0 && requirements.Colors)
+                    return new BigBlueCircle();
+                return new BigCircle();
         }
     }
 }
@@ -58,16 +78,19 @@ public abstract class AbstractVehicleFactory
 public class VehicleFactory : AbstractVehicleFactory
 {
     private readonly IVehicleFactory _factory;
+    private readonly IVehicleFactory _factory2;
     private readonly VehicleRequirements _requirements;
 
     public VehicleFactory(VehicleRequirements requirements)
     {
-        _factory = requirements.Engine ? (IVehicleFactory)new MotorVehicleFactory() : new ShapeFactory();
+        _factory = requirements.Colors ? (IVehicleFactory)new ColoredFactory() : new ShapeFactory();
+        //_factory2 = requirements.BigSize ? (IVehicleFactory)new SizeFactory() : new ShapeFactory();
         _requirements = requirements;
     }
 
     public override IVehicle Create()
     {
         return _factory.Create(_requirements);
+        //return _factory2.Create(_requirements);
     }
 }

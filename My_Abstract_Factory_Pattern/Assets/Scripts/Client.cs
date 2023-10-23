@@ -7,16 +7,14 @@ using UnityEngine.SceneManagement;
 public class Client : MonoBehaviour
 {
     public int NumberOfPoints;
-    public bool Engine;
-    public int Passengers = 0;
-    //public bool Cargo;
+    public bool Colors;
+    public bool BigSize;
 
     // Start is called before the first frame update
     void Start()
     {
         // validate our data
         NumberOfPoints = Mathf.Max(NumberOfPoints);
-        Passengers = Mathf.Max(Passengers, 1);
     }
 
     // Update is called once per frame
@@ -24,9 +22,8 @@ public class Client : MonoBehaviour
     {
         VehicleRequirements requirements = new VehicleRequirements();
         requirements.NumberOfPoints = NumberOfPoints;
-        requirements.Engine = Engine;
-        //requirements.Passengers = Passengers;
-        //requirements.Cargo = Cargo;
+        requirements.Colors = Colors;
+        requirements.BigSize = BigSize;
 
         //IVehicle v = new Unicycle();
         IVehicle v = GetVehicle(requirements);
@@ -53,17 +50,17 @@ public class Client : MonoBehaviour
         return factory.Create();
     }
 
-    public void OnCLickEngineButton()
+    public void OnCLickColorButton()
     {
-        if (Engine) { Engine = false; }
-        else { Engine = true; }
+        if (Colors) { Colors = false; }
+        else { Colors = true; }
     }
 
-    //public void OnCLickCargoButton()
-    //{
-    //    if (Cargo) { Cargo = false; }
-    //    else { Cargo = true; }
-    //}
+    public void OnCLickSizeButton()
+    {
+       if (BigSize) { BigSize = false; }
+        else { BigSize = true; }
+    }
 
     public void ChooseNumPoints(int numPoints)
     {
@@ -80,11 +77,6 @@ public class Client : MonoBehaviour
             NumberOfPoints = 4;
         }
     }
-
-    //public void OnClickAddPassenger()
-    //{
-    //    Passengers++;
-    //}
 
     public void OnClickReloadScene()
     {
